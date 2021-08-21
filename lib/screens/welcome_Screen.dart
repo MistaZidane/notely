@@ -95,7 +95,7 @@ class WelcomeScreen extends StatelessWidget {
                       backgroundColor: Colors.white70,
                     ),
                     onPressed: () {
-                      Get.off(HomeScreen());
+                      Get.off(() => HomeScreen());
                     },
                     child: Text(
                       "HI, NOTELY!",

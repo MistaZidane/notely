@@ -18,7 +18,7 @@ import 'models/notes_model.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(NotesModelAdapter());
-  await Hive.openBox<NotesModelAdapter>('notes');
+  await Hive.openBox<NotesModel>('notes');
   var box = await Hive.openBox('settings');
   box.put("theme", "dark");
   runApp(GetMaterialApp(

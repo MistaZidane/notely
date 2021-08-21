@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:notes/boxes/boxes.dart';
+import 'package:notes/models/notes_model.dart';
 
 class AddNotesScreen extends StatelessWidget {
   AddNotesScreen({Key? key}) : super(key: key);
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController notesController = TextEditingController();
+  void addNotes(NotesModel noteItem) async {
+    final box = Boxes.getNotes();
+
+    box.add(noteItem).then((value) {
+      print("added trasaction successfully");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +47,7 @@ class AddNotesScreen extends StatelessWidget {
                       height: 15.0,
                     ),
                     TextField(
+                      controller: titleController,
                       decoration: InputDecoration(
                         suffixIcon: Icon(Icons.title),
                         hintText: "Your title",
@@ -69,6 +82,7 @@ class AddNotesScreen extends StatelessWidget {
                             height: 20.0,
                           ),
                           TextField(
+                            controller: notesController,
                             maxLines: 6,
                             decoration: InputDecoration(
                               hintText: "Enter notes here",
@@ -111,12 +125,18 @@ class AddNotesScreen extends StatelessWidget {
                               widthFactor: 0.9,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  elevation: 0.1,
-                                  primary: Color.fromRGBO(121, 111, 193, 1),
+                                    elevation: 0.1,
+                                    primary: Color.fromRGBO(121, 111, 193, 1),
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 25.0, vertical: 15.0)
-                                ),
-                                onPressed: () {},
+                                        horizontal: 25.0, vertical: 15.0)),
+                                onPressed: () {
+                                  addNotes(NotesModel(
+                                      id: "ss",
+                                      title: titleController.text,
+                                      notes: notesController.text,
+                                      color: "teal",
+                                      date: DateTime.now()));
+                                },
                                 child: Text(
                                   "Save",
                                   style: TextStyle(color: Colors.white60),
