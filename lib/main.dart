@@ -8,6 +8,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:notes/screens/add_task_screen.dart';
 // import 'package:notes/screens/splash_screen.dart';
 import 'package:notes/screens/welcome_Screen.dart';
+
+import 'models/notes_model.dart';
 // import 'package:notes/widgets/tasks.dart';
 // import 'package:notes/screens/welcome_Screen.dart';
 // import './screens/welcome_Screen.dart';
@@ -15,6 +17,8 @@ import 'package:notes/screens/welcome_Screen.dart';
 
 void main() async {
   await Hive.initFlutter();
+  Hive.registerAdapter(NotesModelAdapter());
+  await Hive.openBox<NotesModelAdapter>('notes');
   var box = await Hive.openBox('settings');
   box.put("theme", "dark");
   runApp(GetMaterialApp(
