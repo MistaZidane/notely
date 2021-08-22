@@ -65,7 +65,7 @@ class AddPasteScreen extends StatelessWidget {
                   id: "id",
                   date: DateTime.now(),
                   text: textfieldontroller.text));
-              Get.snackbar("Success", "Saved Paste",
+              Get.snackbar("Success", "Saved ",
                   snackPosition: SnackPosition.BOTTOM);
             },
             icon: Icon(Icons.save_outlined),

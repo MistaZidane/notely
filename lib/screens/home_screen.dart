@@ -100,7 +100,7 @@ class HomeScreen extends StatelessWidget {
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           onPressed: () {
-            Get.to(AddTaskScreen());
+            Get.to(() => AddTaskScreen());
           },
           child: Icon(Icons.add),
         ),

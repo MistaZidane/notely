@@ -1,7 +1,34 @@
+import 'dart:math';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/boxes/boxes.dart';
+import 'package:notes/models/task_model.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({Key? key}) : super(key: key);
+  AddTaskScreen({Key? key}) : super(key: key);
+  // textFieldControllers
+  final TextEditingController titleController = TextEditingController();
+  Object selectedCategory = '';
+  final TextEditingController notesController = TextEditingController();
+  final List<Color> colors = [
+    Color.fromRGBO(218, 198, 162, 1),
+    Color.fromRGBO(183, 111, 193, 1),
+    Color.fromRGBO(163, 112, 194, 1),
+    Color.fromRGBO(168, 161, 215, 1),
+    Color.fromRGBO(162, 182, 218, 1),
+    Color.fromRGBO(194, 163, 112, 1),
+    Color.fromRGBO(196, 122, 112, 1),
+  ];
+
+  void addTask(TaskModel taskItem) async {
+    final box = Boxes.getTask();
+
+    box.add(taskItem).then((value) {
+      print(value);
+      Get.snackbar("Success", "Saved Task",
+          snackPosition: SnackPosition.BOTTOM);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +87,7 @@ class AddTaskScreen extends StatelessWidget {
                       height: 15.0,
                     ),
                     TextField(
+                      controller: titleController,
                       decoration: InputDecoration(
                         suffixIcon: Icon(Icons.title),
                         hintText: "Your title",
@@ -101,7 +129,10 @@ class AddTaskScreen extends StatelessWidget {
                                 value: label,
                               ))
                           .toList(),
-                      onChanged: (_) {},
+                      onChanged: (value) {
+                        selectedCategory = value!;
+                        print(selectedCategory.toString());
+                      },
                       hint: Text("Category"),
                     ),
                     SizedBox(
@@ -120,6 +151,7 @@ class AddTaskScreen extends StatelessWidget {
                             height: 20.0,
                           ),
                           TextField(
+                            controller: notesController,
                             maxLines: 6,
                             decoration: InputDecoration(
                               hintText: "Enter notes here",
@@ -128,58 +160,6 @@ class AddTaskScreen extends StatelessWidget {
                                   borderSide:
                                       BorderSide(color: Colors.black26)),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Color",
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          ToggleButtons(
-                            selectedBorderColor: Colors.black54,
-                            borderWidth: 3.0,
-                            splashColor: Colors.blue,
-                            children: <Widget>[
-                              Container(
-                                width: 42.0,
-                                height: 42.0,
-                                color: Color.fromRGBO(218, 198, 162, 1),
-                              ),
-                              Container(
-                                width: 42.0,
-                                height: 42.0,
-                                color: Color.fromRGBO(196, 122, 112, 1),
-                              ),
-                              Container(
-                                width: 42.0,
-                                height: 42.0,
-                                color: Color.fromRGBO(162, 182, 218, 1),
-                              ),
-                              Container(
-                                width: 42.0,
-                                height: 42.0,
-                                color: Color.fromRGBO(168, 161, 215, 1),
-                              ),
-                              Container(
-                                width: 42.0,
-                                height: 42.0,
-                                color: Color.fromRGBO(163, 112, 194, 1),
-                              ),
-                            ],
-                            onPressed: (int index) {},
-                            isSelected: [false, true, false, false, false],
                           ),
                         ],
                       ),
@@ -198,10 +178,11 @@ class AddTaskScreen extends StatelessWidget {
                               // height: 50,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    elevation: 0.1,
-                                    primary: Colors.white54,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 25.0, vertical: 15.0),),
+                                  elevation: 0.1,
+                                  primary: Colors.white54,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 25.0, vertical: 15.0),
+                                ),
                                 onPressed: () {},
                                 child: Text(
                                   "Cancel",
@@ -223,7 +204,16 @@ class AddTaskScreen extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 25.0, vertical: 15.0),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  var randonColor = Random();
+                                  addTask(TaskModel(
+                                      id: "id",
+                                      title: titleController.text,
+                                      notes: notesController.text,
+                                      category: selectedCategory.toString(),
+                                      color: randonColor.nextInt(6),
+                                      date: DateTime.now()));
+                                },
                                 child: Text(
                                   "Save",
                                   style: TextStyle(color: Colors.white60),
