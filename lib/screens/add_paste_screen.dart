@@ -1,10 +1,32 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:clipboard/clipboard.dart';
+import 'package:notes/boxes/boxes.dart';
+import '../models/paste_model.dart';
 
 class AddPasteScreen extends StatelessWidget {
   AddPasteScreen({Key? key}) : super(key: key);
   final TextEditingController textfieldontroller = TextEditingController();
+  final List<Color> colors = [
+    Color.fromRGBO(218, 198, 162, 1),
+    Color.fromRGBO(183, 111, 193, 1),
+    Color.fromRGBO(163, 112, 194, 1),
+    Color.fromRGBO(168, 161, 215, 1),
+    Color.fromRGBO(162, 182, 218, 1),
+    Color.fromRGBO(194, 163, 112, 1),
+    Color.fromRGBO(196, 122, 112, 1),
+  ];
+
+  void addPaste(PasteModel pasteItem) async {
+    final box = Boxes.getPaste();
+
+    box.add(pasteItem).then((value) {
+      print(value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +42,8 @@ class AddPasteScreen extends StatelessWidget {
             onPressed: () {
               FlutterClipboard.paste().then((value) {
                 textfieldontroller.text = value;
+                Get.snackbar("Success", "Pasted from Cliboard",
+                    snackPosition: SnackPosition.BOTTOM);
               });
             },
             icon: Icon(Icons.paste_outlined),
@@ -32,6 +56,19 @@ class AddPasteScreen extends StatelessWidget {
               });
             },
             icon: Icon(Icons.copy_outlined),
+          ),
+          IconButton(
+            onPressed: () {
+              var randomColorIndex = Random();
+              addPaste(PasteModel(
+                  color: randomColorIndex.nextInt(6),
+                  id: "id",
+                  date: DateTime.now(),
+                  text: textfieldontroller.text));
+              Get.snackbar("Success", "Saved Paste",
+                  snackPosition: SnackPosition.BOTTOM);
+            },
+            icon: Icon(Icons.save_outlined),
           ),
         ],
       ),

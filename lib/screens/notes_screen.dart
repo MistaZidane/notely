@@ -100,7 +100,7 @@ class NotesScreen extends StatelessWidget {
                                       color: Colors.white70),
                                 ),
                                 Text(
-                                  data!.title,
+                                  data.title,
                                   style: TextStyle(
                                       color: Colors.white70,
                                       fontWeight: FontWeight.bold),

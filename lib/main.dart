@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notes/models/paste_model.dart';
 // import 'package:notes/screens/home_screen.dart';
 // import 'package:notes/screens/add_notes_screen.dart';
 // import 'package:notes/screens/home_screen.dart';
@@ -18,7 +19,9 @@ import 'models/notes_model.dart';
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(NotesModelAdapter());
+  Hive.registerAdapter(PasteModelAdapter());
   await Hive.openBox<NotesModel>('notes');
+  await Hive.openBox<PasteModel>('paste');
   var box = await Hive.openBox('settings');
   box.put("theme", "dark");
   runApp(GetMaterialApp(

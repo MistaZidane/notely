@@ -22,7 +22,7 @@ class AddNotesScreen extends StatelessWidget {
     final box = Boxes.getNotes();
 
     box.add(noteItem).then((value) {
-      print("added trasaction successfully");
+      print(value);
     });
   }
 
