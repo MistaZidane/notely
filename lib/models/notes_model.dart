@@ -12,7 +12,7 @@ class NotesModel {
   @HiveField(3)
   final DateTime date;
   @HiveField(4)
-  final String color;
+  final int color;
 
   NotesModel(
       {required this.id,

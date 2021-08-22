@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:notes/boxes/boxes.dart';
 import 'package:notes/models/notes_model.dart';
@@ -6,6 +8,16 @@ class AddNotesScreen extends StatelessWidget {
   AddNotesScreen({Key? key}) : super(key: key);
   final TextEditingController titleController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
+  final List<Color> colors = [
+    Color.fromRGBO(218, 198, 162, 1),
+    Color.fromRGBO(183, 111, 193, 1),
+    Color.fromRGBO(163, 112, 194, 1),
+    Color.fromRGBO(168, 161, 215, 1),
+    Color.fromRGBO(162, 182, 218, 1),
+    Color.fromRGBO(194, 163, 112, 1),
+    Color.fromRGBO(196, 122, 112, 1),
+  ];
+
   void addNotes(NotesModel noteItem) async {
     final box = Boxes.getNotes();
 
@@ -130,11 +142,12 @@ class AddNotesScreen extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 25.0, vertical: 15.0)),
                                 onPressed: () {
+                                  var randomColorIndex = Random();
                                   addNotes(NotesModel(
                                       id: "ss",
                                       title: titleController.text,
                                       notes: notesController.text,
-                                      color: "teal",
+                                      color: randomColorIndex.nextInt(6),
                                       date: DateTime.now()));
                                 },
                                 child: Text(

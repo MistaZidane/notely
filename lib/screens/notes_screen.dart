@@ -8,8 +8,16 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class NotesScreen extends StatelessWidget {
-  const NotesScreen({Key? key}) : super(key: key);
-
+  NotesScreen({Key? key}) : super(key: key);
+  final List<Color> colors = [
+    Color.fromRGBO(218, 198, 162, 1),
+    Color.fromRGBO(183, 111, 193, 1),
+    Color.fromRGBO(163, 112, 194, 1),
+    Color.fromRGBO(168, 161, 215, 1),
+    Color.fromRGBO(162, 182, 218, 1),
+    Color.fromRGBO(194, 163, 112, 1),
+    Color.fromRGBO(196, 122, 112, 1),
+  ];
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -70,7 +78,7 @@ class NotesScreen extends StatelessWidget {
                   margin: EdgeInsets.all(10.0),
                   elevation: 5.0,
                   shadowColor: Colors.grey,
-                  color: Color.fromRGBO(218, 198, 162, 1),
+                  color: colors[data!.color],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   ),
